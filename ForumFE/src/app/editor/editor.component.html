@@ -1,0 +1,67 @@
+<div class="editor-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-10 offset-md-1 col-xs-12">
+        <form [formGroup]="articleForm">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+              <input
+                class="form-control form-control-lg"
+                formControlName="title"
+                type="text"
+                placeholder="Tiêu đề"
+              />
+            </fieldset>
+
+            <fieldset class="form-group">
+              <textarea
+                class="form-control"
+                formControlName="body"
+                rows="8"
+                placeholder="Viết câu hỏi của bạn"
+              >
+              </textarea>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Nhập thẻ và ấn Enter"
+                [formControl]="tagField"
+                (keyup.enter)="addTag()"
+                (keyup)="search($event)"
+                [matAutocomplete]="auto"
+                matInput
+              />
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                [displayWith]="displayFn.bind(this)"
+              >
+                <mat-option *ngFor="let tag of tagExist" [value]="tag">
+                  {{ tag.name }}
+                </mat-option>
+              </mat-autocomplete>
+
+              <div class="tag-list" style="margin-top: 10px">
+                <span *ngIf="tags.length > 0">Các thẻ đã chọn: </span>
+                <span *ngFor="let tag of tags" class="tag-default tag-pill">
+                  <i class="ion-close-round" (click)="removeTag(tag)"></i>
+                  {{ tag.name }}
+                </span>
+              </div>
+            </fieldset>
+
+            <button
+              class="btn btn-lg pull-xs-right btn-primary"
+              type="button"
+              (click)="submitForm()"
+            >
+              {{ type === "create" ? "Đăng" : "Cập nhật" }}
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="profile-page">
+  <div class="user-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-10 offset-md-1">
+          <img
+            (error)="
+              $event.target.src =
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Avatar_icon_green.svg/1024px-Avatar_icon_green.svg.png'
+            "
+            [src]="profile.avatar"
+            class="user-img"
+          />
+          <h4>{{ profile.username }}</h4>
+          <p>{{ profile.aboutMe }}</p>
+          <div>
+            <button
+              [class]="
+                profile.active
+                  ? 'btn btn-sm btn-danger'
+                  : 'btn btn-sm btn-success'
+              "
+              (click)="setStatus()"
+              onclick="this.blur()"
+              [hidden]="!isAdmin"
+            >
+              <div *ngIf="profile.active">
+                <i class="ion-close-round"></i> Vô hiệu hóa tài khoản này
+              </div>
+              <div *ngIf="!profile.active">
+                <i class="ion-checkmark-round"></i> Kích hoạt tài khoản này
+              </div>
+            </button>
+          </div>
+          <a
+            [routerLink]="['/settings']"
+            [hidden]="!isUser"
+            class="btn btn-sm btn-outline-secondary action-btn"
+          >
+            <i class="ion-gear-a"></i> Sửa thông tin
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-10 offset-md-1">
+        <div class="articles-toggle"></div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
